@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             textViewFromInject.text = viewModel.text
-            textViewFromModuleProvides.text = dataSource.text
+            textViewFromModuleProvides.text = dataSource.info.text
         }
         val view = binding.root
         setContentView(view)
@@ -37,8 +37,13 @@ class MainViewModel @Inject constructor() {
     val text = "Hello World Dagger 2"
 }
 
+// @Inject tells Dagger how to create instances of Info
+class Info @Inject constructor() {
+    val text = "Love Dagger 2 with @Provides and @Module"
+}
+
 // class DataSource @Inject constructor(val text: String), make it simpler...
-class DataSource(val text: String)
+class DataSource(val info: Info)
 
 // @Module informs Dagger that this class is a Dagger Module
 @Module
@@ -48,9 +53,11 @@ class FirstModule {
     // returns (i.e. DataSource).
     // Function parameters are the dependencies of this type.
     @Provides
-    open fun providesDataSource(): DataSource {
+    open fun providesDataSource(
+        info: Info
+    ): DataSource {
         // Whenever Dagger needs to provide an instance of type DataSource,
         // this code (the one inside the @Provides method) is run.
-        return DataSource("Love Dagger 2 with @Provides and @Module")
+        return DataSource(info)
     }
 }
