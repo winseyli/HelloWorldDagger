@@ -6,6 +6,7 @@ import com.example.android.helloworlddagger.databinding.ActivityMainBinding
 import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,6 +50,8 @@ class DataSource(val info: Info)
 @Module
 class FirstModule {
 
+    // Way to scope types inside a Dagger Module
+    @Singleton
     // @Provides tell Dagger how to create instances of the type that this function
     // returns (i.e. DataSource).
     // Function parameters are the dependencies of this type.
