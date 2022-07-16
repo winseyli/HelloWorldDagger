@@ -6,6 +6,7 @@ import com.example.android.helloworlddagger.databinding.ActivityMainBinding
 import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     // You want Dagger to provide an instance of MainViewModel from the graph
     @Inject lateinit var viewModel: MainViewModel
     @Inject lateinit var dataSource: DataSource
+    @Inject @field:Named("MessageA") lateinit var message123: Message
+    @Inject @field:Named("MessageB") lateinit var message456: Message
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Make Dagger instantiate @Inject fields in MainActivity
@@ -27,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             textViewFromInject.text = viewModel.text
             textViewFromModuleProvides.text = dataSource.info.text
+            textViewFromMessageA.text = message123.text
+            textViewFromMessageB.text = message456.text
         }
         val view = binding.root
         setContentView(view)
@@ -62,5 +67,22 @@ class FirstModule {
         // Whenever Dagger needs to provide an instance of type DataSource,
         // this code (the one inside the @Provides method) is run.
         return DataSource(info)
+    }
+}
+
+//===
+
+class Message(val text: String)
+
+@Module
+class SecondModule {
+    @Provides @Named("MessageA")
+    fun provideMessage123(): Message {
+        return Message("Message 123")
+    }
+
+    @Provides @Named("MessageB")
+    fun provideMessage456(): Message {
+        return Message("Message 456")
     }
 }

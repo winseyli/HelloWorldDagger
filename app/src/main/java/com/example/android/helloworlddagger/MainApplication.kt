@@ -11,7 +11,7 @@ import javax.inject.Singleton
 // Definition of the Application graph
 // The "modules" attribute in the @Component annotation tells Dagger what Modules
 // to include when building the graph
-@Component(modules = [FirstModule::class])
+@Component(modules = [FirstModule::class, SecondModule::class])
 interface ApplicationComponent {
     // This tells Dagger that MainActivity requests injection so the graph needs to
     // satisfy all the dependencies of the fields that MainActivity is requesting.
