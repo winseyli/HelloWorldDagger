@@ -5,7 +5,9 @@ import dagger.Component
 import javax.inject.Inject
 
 // Definition of the Application graph
-@Component
+// The "modules" attribute in the @Component annotation tells Dagger what Modules
+// to include when building the graph
+@Component(modules = [FirstModule::class])
 interface ApplicationComponent {
     // This tells Dagger that MainActivity requests injection so the graph needs to
     // satisfy all the dependencies of the fields that MainActivity is requesting.
