@@ -13,11 +13,15 @@ import javax.inject.Singleton
 // Definition of the Application graph
 // The "modules" attribute in the @Component annotation tells Dagger what Modules
 // to include when building the graph
-@Component(modules = [FirstModule::class, SecondModule::class])
+@Component(modules = [FirstModule::class, SecondModule::class, FirstSubcomponentModule::class])
 interface ApplicationComponent {
     // This tells Dagger that MainActivity requests injection so the graph needs to
     // satisfy all the dependencies of the fields that MainActivity is requesting.
     fun inject(activity: MainActivity)
+
+    // This function exposes the FirstSubcomponent Factory out of the graph so consumers
+    // can use it to obtain new instances of FirstSubcomponent
+    fun firstSubcomponent(): FirstSubcomponent.Factory
 }
 
 // @Inject tells Dagger how to create instances of MainViewModel
