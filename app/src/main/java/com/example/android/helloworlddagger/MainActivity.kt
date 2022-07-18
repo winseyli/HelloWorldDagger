@@ -1,5 +1,6 @@
 package com.example.android.helloworlddagger
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.android.helloworlddagger.databinding.ActivityMainBinding
@@ -32,6 +33,15 @@ class MainActivity : AppCompatActivity() {
             textViewFromModuleProvides.text = dataSource.info.text
             textViewFromMessageA.text = message123.text
             textViewFromMessageB.text = message456.text
+
+            buttonFirst.setOnClickListener {
+                val intent = Intent(this@MainActivity, FirstActivity::class.java)
+                startActivity(intent)
+            }
+            buttonSecond.setOnClickListener {
+                val intent = Intent(this@MainActivity, SecondActivity::class.java)
+                startActivity(intent)
+            }
         }
         val view = binding.root
         setContentView(view)
