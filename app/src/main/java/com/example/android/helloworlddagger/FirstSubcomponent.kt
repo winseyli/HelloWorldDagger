@@ -3,7 +3,16 @@ package com.example.android.helloworlddagger
 import dagger.Module
 import dagger.Subcomponent
 import javax.inject.Inject
+import javax.inject.Scope
 
+// Definition of a custom scope called ActivityScope
+@Scope
+@Retention(value = AnnotationRetention.RUNTIME)
+annotation class ActivityScope
+
+// Classes annotated with @ActivityScope are scoped to the graph and the same
+// instance of that type is provided every time the type is requested.
+@ActivityScope
 // @Subcomponent annotation informs Dagger this interface is a Dagger Subcomponent
 @Subcomponent
 interface FirstSubcomponent {
@@ -18,6 +27,8 @@ interface FirstSubcomponent {
     // so that this subcomponent graph needs to satisfy all the dependencies of the
     // fields that FirstActivity is injecting
     fun inject(activity: FirstActivity)
+
+    fun inject(activity: SecondActivity)
 }
 
 // The "subcomponents" attribute in the @Module annotation tells Dagger what
@@ -25,6 +36,9 @@ interface FirstSubcomponent {
 @Module(subcomponents = [FirstSubcomponent::class])
 class FirstSubcomponentModule {}
 
+// A unique instance of FirstViewModel is provided in Components
+// annotated with @ActivityScope
+@ActivityScope
 class FirstViewModel @Inject constructor() {
-    val text = "Hello World Dagger subcomponents"
+    val text = "Hello World Dagger subcomponents, random number ${(0..10).random()}"
 }
