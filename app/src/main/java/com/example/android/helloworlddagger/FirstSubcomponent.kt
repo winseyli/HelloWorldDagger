@@ -23,12 +23,12 @@ interface FirstSubcomponent {
         fun create(): FirstSubcomponent
     }
 
-    // This tells Dagger that FirstActivity requests injection from FirstSubcomponent
+    // This tells Dagger that these Activities/Fragments request injection from FirstSubcomponent
     // so that this subcomponent graph needs to satisfy all the dependencies of the
-    // fields that FirstActivity is injecting
-    fun inject(activity: FirstActivity)
-
+    // fields that these Activities/Fragments are injecting
     fun inject(activity: SecondActivity)
+    fun inject(fragment: FirstFragment)
+    fun inject(fragment: SecondFragment)
 }
 
 // The "subcomponents" attribute in the @Module annotation tells Dagger what
